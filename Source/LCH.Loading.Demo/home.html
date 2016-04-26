@@ -1,0 +1,133 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-body">
+        <h1>
+            LCH.Loading
+            <small>A smart loading queue</small>
+        </h1>
+        <div class="row" style="margin-top:20px">
+            <div class="col-xs-12">
+                <div class="form-inline" style="margin-bottom:15px">
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary"
+                                    ng-click="testCtrl.AddTimeout(testCtrl.auxTimeout)">
+                                <i class="fa fa-clock-o"></i>
+                                Add timeout
+                            </button>
+                        </span>
+                        <input type="number" class="form-control"
+                               placeholder="ms"
+                               step="1000"
+                               ng-model="testCtrl.auxTimeout">
+                    </div>
+
+                    <button class="btn btn-warning"
+                            ng-click="testCtrl.Reset()">
+                        <i class="fa fa-times"></i>
+                        Clear
+                    </button>
+                    <div class="btn-group">
+                        <button class="btn btn-default"
+                                ng-repeat="test in testCtrl.testList track by $index"
+                                ng-click="testCtrl.resetBeforeTests ? testCtrl.Reset() : null; testCtrl[test]()">
+                            <i class="fa fa-code"></i>
+                            <span ng-bind="test"></span>
+                        </button>
+                    </div>
+
+                    <div class="checkbox checkbox-inline">
+                        <label>
+                            <input type="checkbox"
+                                   ng-model="testCtrl.resetBeforeTests" /> Reset before each test.
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <h4>
+                        <i class="fa fa-refresh"></i>
+                        Loading directive
+                    </h4>
+                    <p>
+                        Declaring a template and then applying it using template-url
+                    </p>
+
+                    <div style="margin-top:15px"
+                         loading
+                         template-url="loading-huge-template.html"
+                         instance="testCtrl.loader">
+                        <h4 class="text-success text-center">
+                            <i class="glyphicon glyphicon-check"></i>
+                            All content loaded.
+                        </h4>
+                    </div>
+
+                </div>
+                <div class="col-xs-6">
+                    <h4>
+                        <i class="fa fa-file-code-o"></i>
+                        LoadingManager Algorithm
+                    </h4>
+                    <p>
+                        The loader promises are wrappers of the original promises.
+                        The original promises can be an <code>ng.ipromise</code>s triggering the loading, or a <code>Queue</code> chained with the original promise.
+                        Wrappers get canceled whenever a new promise is requested for binding.
+                        A new <code>Queue</code> is created, chaining the current queue and the new promise,
+                        and it becomes the new queue.
+                    </p>
+                </div>
+            </div>
+            <script type="text/ng-template"
+                    id="promise-template.html">
+                <loading promise="promise">
+                    <span ng-show="promise.OriginalPromise.$$state.status == 2"
+                          class="text-danger">
+                        Rejected
+                    </span>
+                    <span ng-show="promise.OriginalPromise.$$state.status == 1"
+                          class="text-success">Finished</span>
+                </loading>
+            </script>
+            <div class="col-xs-12" style="margin-top:25px">
+                <div class="col-xs-12 col-md-6">
+                    <h4>
+                        <i class="fa fa-clock-o"></i>
+                        Original Promises
+                    </h4>
+                    <ol>
+                        <li ng-repeat="promise in testCtrl.promiseList"
+                            ng-include="'promise-template.html'">
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <h4>
+                        <i class="fa fa-copy"></i>
+                        Loader Promises
+                    </h4>
+                    <ol>
+                        <li ng-repeat="promise in testCtrl.promiseList"
+                            ng-include="'promise-template.html'">
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="col-xs-12">
+                <h4>$http example</h4>
+
+                <button class="btn btn-primary"
+                        ng-click="testCtrl.HttpExample()">
+                    Execute
+                </button>
+
+                <div style="margin-top:25px"
+                     template-url="loading-huge-template.html"
+                     loading instance="testCtrl.httpLoader">
+                    <pre>{{testCtrl.httpResponse|json}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

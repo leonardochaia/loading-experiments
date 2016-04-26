@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="LCH.Loading.Demo">
+<head>
+    <meta charset="utf-8" />
+    <title>LCH.Loading Demo Page</title>
+
+    <!--3d party Stylesheets-->
+    <link rel="stylesheet"
+          href="Content/bootstrap.css"
+          type="text/css" />
+    <link rel="stylesheet"
+          href="Content/font-awesome.css"
+          type="text/css" />
+    <style type="text/css">
+        /*Bugfix for animations and ngShow/hide*/
+        .fa-spin.ng-animate,
+        .fa-pulse.ng-animate {
+            -moz-animation: none 0s;
+            -o-animation: none 0s;
+            -webkit-animation: none 0s;
+            animation: none 0s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-top:15px"
+         loading main
+         template-url="loading-huge-template.html">
+        <ng-view></ng-view>
+    </div>
+
+    <!--JavaScript files-->
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/angular-q-extras/angular-q-extras.js"></script>
+    <script src="Scripts/lch-loading/lch-loading.js"></script>
+    <script src="Scripts/demo.js"></script>
+</body>
+</html>
